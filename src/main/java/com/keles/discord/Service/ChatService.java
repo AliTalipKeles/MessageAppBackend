@@ -2,12 +2,16 @@ package com.keles.discord.Service;
 
 import com.keles.discord.Repo.ChatRepo;
 import com.keles.discord.Repo.UserRepo;
+import com.keles.discord.model.BasicSentence;
 import com.keles.discord.model.Chat;
+import com.keles.discord.model.Sentence;
 import com.keles.discord.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
 public class ChatService {
@@ -22,5 +26,23 @@ public class ChatService {
         chat.setChatName(chatname);
         chat.setParticipants(userRepo.findAllById(usersid));
         repo.save(chat);
+    }
+
+
+    public List<String> showuserchat(User user) {
+
+        return repo.getUserChat(String.valueOf(userRepo.findByUsername(user.getUsername()).getId()));
+
+    }
+
+    public List<BasicSentence>  showchat(String chatname, User user){
+        //if(repo.isuserinchat()){ this should implemented
+            List<Object[]>  rawResults = repo.showchat(chatname);
+            return rawResults.stream()
+                    .map(row -> new BasicSentence((int) row[0],(String) row[1],userRepo))
+                    .collect(Collectors.toList());
+        //}
+
+
     }
 }

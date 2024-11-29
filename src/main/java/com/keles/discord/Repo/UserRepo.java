@@ -14,7 +14,6 @@ public interface UserRepo extends JpaRepository<User, Integer> {
     User findByUsername(String username);
 
     @Transactional
-    @Modifying
     @Query(value = "UPDATE users u SET u.username = :newname WHERE u.username = :realusername",nativeQuery = true)
     void updateUsernameById( @Param("newname") String newname,@Param("realusername") String username);
 

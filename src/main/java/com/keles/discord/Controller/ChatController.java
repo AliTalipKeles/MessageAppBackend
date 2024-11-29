@@ -2,12 +2,11 @@ package com.keles.discord.Controller;
 
 import com.keles.discord.Service.ChatService;
 import com.keles.discord.Service.UserService;
+import com.keles.discord.model.BasicSentence;
+import com.keles.discord.model.Sentence;
 import com.keles.discord.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -26,4 +25,20 @@ public class ChatController {
         chatService.createChat(user,usersid,chatname);
         return "Successful";
     }
+    @GetMapping("/showuserchats")
+    public List<String>  showuserchats(@RequestBody User user){
+        service.checkuser(user);
+
+        return chatService.showuserchat(user);
+
+
+    }
+
+    @GetMapping("/showchat/{chatname}")
+    public String showchat(@PathVariable String chatname, @RequestBody User user){
+        service.checkuser(user);
+        return chatService.showchat(chatname,user).toString();
+
+    }
+
 }
