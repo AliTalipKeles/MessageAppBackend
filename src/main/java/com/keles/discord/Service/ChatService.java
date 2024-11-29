@@ -9,6 +9,7 @@ import com.keles.discord.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -38,11 +39,20 @@ public class ChatService {
     public List<BasicSentence>  showchat(String chatname, User user){
         //if(repo.isuserinchat()){ this should implemented
             List<Object[]>  rawResults = repo.showchat(chatname);
+            List<BasicSentence> basicSentences = new ArrayList<>();
             return rawResults.stream()
-                    .map(row -> new BasicSentence((int) row[0],(String) row[1],userRepo))
+                    .map(row-> new BasicSentence((Long) row[0],(String) row[1]))
                     .collect(Collectors.toList());
-        //}
 
+        //}
+    }
+
+    public String printchat(List<BasicSentence> basicSentences) {
+        StringBuilder stringBuffer = new StringBuilder();
+        for(BasicSentence s : basicSentences){
+            stringBuffer.append(userRepo.findById(s.getUserid()).getUsername()).append(": \n").append(s.getString()).append("\n");
+        }
+        return stringBuffer.toString();
 
     }
 }

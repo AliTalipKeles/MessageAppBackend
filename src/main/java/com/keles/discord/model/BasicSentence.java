@@ -5,12 +5,10 @@ import lombok.Data;
 
 @Data
 public class BasicSentence {
-    User user;
-
+    Long userid;
     String string;
-
-    public BasicSentence(int user_id, String string, UserRepo userRepo){
-            this.user =userRepo.getReferenceById(user_id);
+    public BasicSentence(Long userid, String string){
+            this.userid=userid ;
             this.string = string;
 
     }

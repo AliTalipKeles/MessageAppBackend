@@ -36,9 +36,13 @@ public class ChatController {
 
     @GetMapping("/showchat/{chatname}")
     public String showchat(@PathVariable String chatname, @RequestBody User user){
-        service.checkuser(user);
-        return chatService.showchat(chatname,user).toString();
+        if(service.checkuser(user)) {
+            List<BasicSentence> basicSentences = chatService.showchat(chatname, user);
 
+            return chatService.printchat(basicSentences);
+        }else {
+            return "This user does not exist please first sign in or log in ";
+        }
     }
 
 }
