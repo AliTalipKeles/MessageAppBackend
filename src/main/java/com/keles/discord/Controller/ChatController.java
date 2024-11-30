@@ -8,6 +8,7 @@ import com.keles.discord.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -27,7 +28,9 @@ public class ChatController {
     }
     @GetMapping("/showuserchats")
     public List<String>  showuserchats(@RequestBody User user){
-        service.checkuser(user);
+        if(!service.checkuser(user)){
+            return Collections.singletonList("This user does not exist please first sign in or log in ");
+        }
 
         return chatService.showuserchat(user);
 

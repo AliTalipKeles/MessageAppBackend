@@ -24,7 +24,7 @@ public class SentenceController {
         if(!userService.checkuser(user)){
             return "This user does not exist please first sign in or log in ";
         }
-
+        //We should check is User in this chat
         sentenceService.sendMessage(chatname,user,message);
         return "Successful";
     }

@@ -16,8 +16,15 @@ public class UserService {
         repo.save(user);
     }
 
-    public void deleteUser(String username) {
-        repo.delete(repo.findByUsername(username));
+    public String  deleteUser(String username) {
+        User user = repo.findByUsername(username);
+        System.out.println(repo.findByUsername(username));
+        if(user == null){
+            return "this user do not exist";
+        }
+
+        repo.deleteById(Math.toIntExact(repo.findByUsername(username).getId()));
+        return "Successful";
     }
 
     public void changename(User user, String newname) {

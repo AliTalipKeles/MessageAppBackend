@@ -11,7 +11,7 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    private final String realpassword = "**********";
+    private final String realpassword = "Alitkeles61_";
 
     @PostMapping("/createUser/{password}")
     public String createUser(@RequestBody User user ,@PathVariable("password") String password){
@@ -24,9 +24,9 @@ public class UserController {
     }
 
     @DeleteMapping("/deleteUser/{password}")
-    public String deleteUser(@RequestBody String username,@PathVariable("password") String password){
+    public String deleteUser(@RequestBody User user,@PathVariable("password") String password){
         if (realpassword.equals(password)) {
-            userService.deleteUser(username);
+            userService.deleteUser(user.getUsername());
             return "Successful";
         }else {
             return "Wrong Password";

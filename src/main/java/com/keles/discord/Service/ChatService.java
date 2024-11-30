@@ -36,10 +36,11 @@ public class ChatService {
 
     }
 
-    public List<BasicSentence>  showchat(String chatname, User user){
+    public List<BasicSentence> showchat(String chatname, User user){
         //if(repo.isuserinchat()){ this should implemented
-            List<Object[]>  rawResults = repo.showchat(chatname);
+            List<Object[]>  rawResults = repo.showchat(String.valueOf(repo.findByChatName(chatname).getId()));
             List<BasicSentence> basicSentences = new ArrayList<>();
+            System.out.println(basicSentences);
             return rawResults.stream()
                     .map(row-> new BasicSentence((Long) row[0],(String) row[1]))
                     .collect(Collectors.toList());

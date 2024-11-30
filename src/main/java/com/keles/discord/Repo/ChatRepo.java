@@ -20,10 +20,10 @@ public interface ChatRepo extends JpaRepository<Chat,Integer> {
 
     @Transactional
     @Modifying
-    @Query(value = "SELECT DISTINCT chats.chat_name FROM chats JOIN chat_participants WHERE chat_participants.user_id = :userid ",nativeQuery = true)
+    @Query(value = "SELECT c.chat_name FROM chats c JOIN chat_participants cp ON c.id = cp.chat_id WHERE cp.user_id = :userid ",nativeQuery = true)
     List<String> getUserChat(@Param("userid") String userid);
 
     @Transactional
-    @Query(value = "SELECT s.user_id,s.string FROM sentence AS s WHERE s.chat_id = 1",nativeQuery = true )
+    @Query(value = "SELECT s.user_id,s.string FROM sentence AS s WHERE s.chat_id = :chatid",nativeQuery = true )
     List<Object[]> showchat(@Param("chatid") String chatid);
 }
