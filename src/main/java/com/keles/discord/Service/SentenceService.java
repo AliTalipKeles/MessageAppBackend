@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class SentenceService {
@@ -31,5 +32,11 @@ public class SentenceService {
         sentence.setChat(chatRepo.findByChatName(chatname));
 
         sentenceRepo.save(sentence);
+    }
+
+    public boolean IsUserInChat(User user,String chatname) {
+        List<String> userchats = chatRepo.getUserChat(String.valueOf(userRepo.findByUsername(user.getUsername()).getId()));
+
+        return userchats.contains(chatname);
     }
 }

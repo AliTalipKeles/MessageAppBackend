@@ -19,11 +19,14 @@ public class SentenceController {
     @PostMapping("sendmessage/{chatname}")
     public String sendMessage(@PathVariable("chatname") String chatname, @RequestBody UserMessageRequest request){
         User user = request.getUser();
-        System.out.println(user);
         String message = request.getMessage();
+
         if(!userService.checkuser(user)){
             return "This user does not exist please first sign in or log in ";
+        }else if(!sentenceService.IsUserInChat(user,chatname)){
+            return "This user is not in "+chatname;
         }
+
         //We should check is User in this chat
         sentenceService.sendMessage(chatname,user,message);
         return "Successful";

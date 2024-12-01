@@ -3,7 +3,6 @@ package com.keles.discord.Controller;
 import com.keles.discord.Service.ChatService;
 import com.keles.discord.Service.UserService;
 import com.keles.discord.model.BasicSentence;
-import com.keles.discord.model.Sentence;
 import com.keles.discord.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -32,20 +31,24 @@ public class ChatController {
             return Collections.singletonList("This user does not exist please first sign in or log in ");
         }
 
-        return chatService.showuserchat(user);
+        return chatService.showUserChat(user);
 
 
     }
 
     @GetMapping("/showchat/{chatname}")
-    public String showchat(@PathVariable String chatname, @RequestBody User user){
-        if(service.checkuser(user)) {
-            List<BasicSentence> basicSentences = chatService.showchat(chatname, user);
+    public String showchat(@PathVariable String chatname, @RequestBody User user) {
 
-            return chatService.printchat(basicSentences);
+        if (service.checkuser(user)) {
+            List<BasicSentence> basicSentences = chatService.showChat(chatname, user);
+            if (basicSentences == null){
+                return "This user is not in the "+ chatname;
+            }
+            return chatService.printChat(basicSentences);
         }else {
             return "This user does not exist please first sign in or log in ";
         }
+
     }
 
 }
