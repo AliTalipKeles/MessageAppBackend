@@ -11,7 +11,7 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    private final String realpassword = "Alitkeles61_";
+    private final String realpassword = "*****************";
 
     @PostMapping("/createUser/{password}")
     public String createUser(@RequestBody User user ,@PathVariable("password") String password){
