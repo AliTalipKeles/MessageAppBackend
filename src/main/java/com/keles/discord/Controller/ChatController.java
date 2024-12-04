@@ -48,6 +48,37 @@ public class ChatController {
         }else {
             return "This user does not exist please first sign in or log in ";
         }
+    }
+
+    @PutMapping("adduserinchat/{chatName}/{user_id}")
+    public String addUserInChat(@RequestBody User user,@PathVariable String chatName,@PathVariable String user_id){
+        if(chatService.isUserChatLeader(chatName,user)){
+            chatService.AddUserInChat(chatName,user_id);
+            return "Succesful";
+        }
+        return "You are not chat leader";
+    }
+
+    @GetMapping("showChatUser/{chatname}")
+    public List<String> showChatUser(@RequestBody User user,@PathVariable String chatname){
+        if(!service.checkuser(user)){
+            return Collections.singletonList("This user does not exist please first sign in or log in ");
+        }
+        if(chatService.IsUserInChat(user,chatname)){
+            return chatService.showChatUser(chatname);
+        }
+        return Collections.singletonList("You are not in chat");
+    }
+
+    @DeleteMapping("deleteUserInChat/{chatName}/{user_id}")
+    public String deleteUserInChat(@RequestBody User user,@PathVariable String chatName,@PathVariable String user_id){
+        if(!service.checkuser(user)){
+            return "This user does not exist please first sign in or log in ";
+        }
+        if(chatService.isUserChatLeader(chatName,user)){
+            return chatService.deleteUserInChat(chatName,user_id);
+        }
+        return "You are not chat leader";
 
     }
 

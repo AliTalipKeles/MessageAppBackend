@@ -33,5 +33,8 @@ public class Chat {
     @Column(nullable = false)
     private String chatName;
 
+    @Column(nullable = false)
+    private Long leader_id;
+
     // Getter ve Setter
 }

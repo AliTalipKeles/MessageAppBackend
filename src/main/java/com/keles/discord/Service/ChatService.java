@@ -24,6 +24,7 @@ public class ChatService {
         Chat chat = new Chat();
         chat.setChatName(chatname);
         chat.setParticipants(userRepo.findAllById(usersid));
+        chat.setLeader_id(user.getId());
         repo.save(chat);
     }
 
@@ -61,5 +62,26 @@ public class ChatService {
         List<String> userchats = repo.getUserChat(String.valueOf(userRepo.findByUsername(user.getUsername()).getId()));
 
         return userchats.contains(chatname);
+    }
+
+    public boolean isUserChatLeader(String chatName ,User user) {
+        User user1 = userRepo.getReferenceById(repo.getChatLeader(chatName));
+
+        return (user1.getUsername().equals(user.getUsername()) && user1.getPassword().equals(user.getPassword()));
+    }
+
+    public void AddUserInChat(String chatName, String userId) {
+        Chat chat = repo.findByChatName(chatName);
+        repo.AddUserInChat(String.valueOf(chat.getId()),userId);
+    }
+
+    public List<String> showChatUser(String chatname) {
+        return repo.showChatUser(String.valueOf(repo.findByChatName(chatname).getId()));
+
+    }
+
+    public String deleteUserInChat(String chatname, String userId) {
+        repo.deleteUserInChat(String.valueOf(repo.findByChatName(chatname).getId()),userId);
+        return "Succesful";
     }
 }
