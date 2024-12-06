@@ -55,7 +55,6 @@ public class ChatService {
             stringBuffer.append(userRepo.findById(s.getUserid()).getUsername()).append(": \n").append(s.getString()).append("\n");
         }
         return stringBuffer.toString();
-
     }
 
     public boolean IsUserInChat(User user,String chatname) {
@@ -74,14 +73,15 @@ public class ChatService {
         Chat chat = repo.findByChatName(chatName);
         repo.AddUserInChat(String.valueOf(chat.getId()),userId);
     }
+    public String deleteUserInChat(String chatname, String userId) {
+        repo.deleteUserInChat(String.valueOf(repo.findByChatName(chatname).getId()),userId);
+        return "Succesful";
+    }
 
     public List<String> showChatUser(String chatname) {
         return repo.showChatUser(String.valueOf(repo.findByChatName(chatname).getId()));
 
     }
 
-    public String deleteUserInChat(String chatname, String userId) {
-        repo.deleteUserInChat(String.valueOf(repo.findByChatName(chatname).getId()),userId);
-        return "Succesful";
-    }
+
 }

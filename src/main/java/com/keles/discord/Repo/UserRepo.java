@@ -7,8 +7,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-
 public interface UserRepo extends JpaRepository<User, Integer> {
 
     @Transactional
@@ -22,7 +20,10 @@ public interface UserRepo extends JpaRepository<User, Integer> {
     @Modifying
     @Transactional
     @Query(value = "UPDATE users u SET u.username = :newname WHERE u.username = :realusername",nativeQuery = true)
-    void updateUsernameById( @Param("newname") String newname,@Param("realusername") String username);
+    void updateUsernameByUsername(@Param("newname") String newname, @Param("realusername") String username);
 
-
+    @Modifying
+    @Transactional
+    @Query(value = "UPDATE users u SET u.password = :newpassword WHERE u.username = :realusername",nativeQuery = true)
+    void updatePasswordByUsername(@Param("newpassword") String newpassword,@Param("realusername") String username);
 }

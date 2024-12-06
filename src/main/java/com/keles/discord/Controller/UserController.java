@@ -44,4 +44,16 @@ public class UserController {
             return "Successful";
         }
     }
+    @PutMapping("/changepassword/{newpassword}")
+    public String changePassword(@RequestBody User user,@PathVariable("newpassword") String newpassword){
+        if(!userService.checkuser(user)){
+            return "This user does not exist please first sign in or log in ";
+        }
+        if(newpassword.equals(user.getPassword())){
+            return "This password is equal choose a different password";
+        }else {
+            userService.changepassword(user,newpassword);
+            return "Successful";
+        }
+    }
 }

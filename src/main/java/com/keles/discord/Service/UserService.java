@@ -28,8 +28,7 @@ public class UserService {
     }
 
     public void changename(User user, String newname) {
-        System.out.println(user.getId());
-        repo.updateUsernameById(newname,user.getUsername());
+        repo.updateUsernameByUsername(newname,user.getUsername());
 
     }
 
@@ -40,5 +39,9 @@ public class UserService {
             return false;
         }
         return user.getUsername().equals(isvalid.getUsername()) && user.getPassword().equals(isvalid.getPassword());
+    }
+
+    public void changepassword(User user, String newpassword) {
+        repo.updatePasswordByUsername(newpassword,user.getUsername());
     }
 }
