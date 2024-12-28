@@ -1,11 +1,14 @@
 package com.keles.discord.Repo;
 
 import com.keles.discord.model.User;
+import org.hibernate.grammars.hql.HqlParser;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 public interface UserRepo extends JpaRepository<User, Integer> {
 
@@ -26,4 +29,8 @@ public interface UserRepo extends JpaRepository<User, Integer> {
     @Transactional
     @Query(value = "UPDATE users u SET u.password = :newpassword WHERE u.username = :realusername",nativeQuery = true)
     void updatePasswordByUsername(@Param("newpassword") String newpassword,@Param("realusername") String username);
+
+    @Transactional
+    @Query(value = "SELECT users.username FROM users",nativeQuery = true)
+    List<String> getAllUser();
 }

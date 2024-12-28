@@ -5,6 +5,8 @@ import com.keles.discord.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 
 @Service
 public class UserService {
@@ -43,5 +45,9 @@ public class UserService {
 
     public void changepassword(User user, String newpassword) {
         repo.updatePasswordByUsername(newpassword,user.getUsername());
+    }
+
+    public List<String> getAllUser(){
+        return repo.getAllUser();
     }
 }

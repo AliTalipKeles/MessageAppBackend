@@ -31,8 +31,4 @@ public class SentenceController {
         sentenceService.sendMessage(chatname,user,message);
         return "Successful";
     }
-
-
-
-
 }

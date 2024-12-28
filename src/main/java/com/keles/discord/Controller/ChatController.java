@@ -25,16 +25,7 @@ public class ChatController {
         chatService.createChat(user,usersid,chatname);
         return "Successful";
     }
-    @GetMapping("/showuserchats")
-    public List<String>  showuserchats(@RequestBody User user){
-        if(!service.checkuser(user)){
-            return Collections.singletonList("This user does not exist please first sign in or log in ");
-        }
 
-        return chatService.showUserChat(user);
-
-
-    }
 
     @GetMapping("/showchat/{chatname}")
     public String showchat(@PathVariable String chatname, @RequestBody User user) {

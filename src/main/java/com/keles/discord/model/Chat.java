@@ -15,7 +15,7 @@ import java.util.List;
 @Entity
 @Table(name = "Chats")
 public class Chat {
-    @Id
+    @Id 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
